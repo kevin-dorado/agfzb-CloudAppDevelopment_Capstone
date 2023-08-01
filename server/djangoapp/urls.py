@@ -22,7 +22,10 @@ urlpatterns = [
     path(route='', view=views.get_dealerships, name='index'),
 
     # path for dealer reviews view
+  path(route='static/', view=views.static_template_view, name='static_template'),
 
+  path(route='about/', view=views.get_about, name='about'),
     # path for add a review view
+ path(route='contact/', view=views.get_contact, name='contact'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

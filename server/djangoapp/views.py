@@ -44,6 +44,20 @@ def get_dealerships(request):
         return render(request, 'djangoapp/index.html', context)
 
 
+def static_template_view(request):
+    context = {}
+    if request.method == "GET":
+        return render(request, 'static_template.html', context)
+
+def get_about(request):
+    context = {}
+    if request.method == "GET":
+        return render(request, 'djangoapp/about.html', context)
+
+def get_contact(request):
+    context = {}
+    if request.method == "GET":
+        return render(request, 'djangoapp/contact.html', context)
 # Create a `get_dealer_details` view to render the reviews of a dealer
 # def get_dealer_details(request, dealer_id):
 # ...
@@ -52,3 +66,4 @@ def get_dealerships(request):
 # def add_review(request, dealer_id):
 # ...
 
+ 
