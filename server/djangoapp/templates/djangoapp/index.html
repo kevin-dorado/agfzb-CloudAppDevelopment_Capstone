@@ -19,23 +19,54 @@
 
  
     <!--Add a nav bar here -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+   <!--  <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Bienvenido!</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
+            <div class="navbar-nav ">
               <a class="nav-link active" aria-current="page" href="#">Inicio</a>
               <a class="nav-link" href="#">Noticias</a>
               <a class="nav-link" href="#">Contacto</a>
               <a class="nav-link" href="#">Acerca de Nosotros</a>
+              
+
+            
             </div>
           </div>
         </div>
-      </nav>
-    <!--Add a dealer table here -->
+      </nav> -->
+   <nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Online Course</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+            <li>
+                <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+            </li>
+            {% else %}
+            <li>
+                <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Username" name="username" >
+                        <input type="password" class="form-control" placeholder="Password" name="psw" >
+                        <button class="btn btn-primary" type="submit">Login</button>
+                        <a class="btn btn-link" href="/djangoapp/registration/">Sign Up</a>
+                    </div>
+                </form>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+
     <div class="container mt-5">
         <h1 >Welcome to my website!</h1>
         <p>This is a sample website created using Django. Here, you can find information about various topics and explore different sections of the site.</p>

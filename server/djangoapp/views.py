@@ -44,6 +44,15 @@ def get_dealerships(request):
         return render(request, 'djangoapp/index.html', context)
 
 
+# Create a `get_dealer_details` view to render the reviews of a dealer
+# def get_dealer_details(request, dealer_id):
+# ...
+
+# Create a `add_review` view to submit a review
+# def add_review(request, dealer_id):
+# ...
+
+
 def static_template_view(request):
     context = {}
     if request.method == "GET":
@@ -58,12 +67,48 @@ def get_contact(request):
     context = {}
     if request.method == "GET":
         return render(request, 'djangoapp/contact.html', context)
-# Create a `get_dealer_details` view to render the reviews of a dealer
-# def get_dealer_details(request, dealer_id):
-# ...
 
-# Create a `add_review` view to submit a review
-# def add_review(request, dealer_id):
-# ...
 
- 
+# def registration_request(request):
+#     if request.method == "POST":
+#         # Handle user registration logic here
+#         # For example, create a new user
+#         # and save it to the database
+#         return redirect('djangoapp:login')
+#     return render(request, 'djangoapp/registration.html')
+
+def login_request(request):
+    context = {}
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['psw']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('djangoapp:index')
+        else:
+            context['message'] = "Invalid username or password."
+            return render(request, 'djangoapp/index.html', context)
+    else:
+        return render(request, 'djangoapp/index.html', context)
+
+
+def logout_request(request):
+    logout(request)
+    return redirect('djangoapp:index')
+
+def registration_request(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Username already taken.')
+        else:
+            user = User.objects.create_user(username=username, password=password, first_name=first_name, last_name=last_name)
+            user.save()
+            messages.success(request, 'Registration successful. You can now log in.')
+            return redirect('djangoapp:index')
+    return render(request, 'djangoapp/registration.html')
