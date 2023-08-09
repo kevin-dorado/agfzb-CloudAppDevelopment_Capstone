@@ -114,21 +114,20 @@ def registration_request(request):
             messages.success(request, 'Registration successful. You can now log in.')
             return redirect('djangoapp:index')
     return render(request, 'djangoapp/registration.html')
-
+    
 def login_request(request):
     context = {}
-    if request.method == "POST":
+    if request.method == 'POST':
         username = request.POST['username']
-        password = request.POST['psw']
+        password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
             return redirect('djangoapp:index')
         else:
             context['message'] = "Invalid username or password."
-            return render(request, 'djangoapp/index.html', context)
-    else:
-        return render(request, 'djangoapp/index.html', context)
+            return render(request, 'djangoapp/registration.html', context)
+    return render(request, 'djangoapp/registration.html', context)
 
 
 def logout_request(request):
